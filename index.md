@@ -1,6 +1,19 @@
 ```
 <?php
 
+$pdo = new PDO('sqlite:books.db');
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$pdo->exec("
+    CREATE TABLE IF NOT EXISTS books (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_name TEXT NOT NULL,
+        title TEXT NOT NULL,
+        author TEXT NOT NULL,
+        year INTEGER NOT NULL
+    );
+");
+
 function handleForm(PDO $pdo): void {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         echo "Форма не отправлена";
